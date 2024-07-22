@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseConnection {
-    private static volatile DatabaseConnection instance;
-    private Connection connection;
 
     private static final Properties props = new Properties();
     private static final String URL;
@@ -32,9 +30,13 @@ public class DatabaseConnection {
     }
 
     private DatabaseConnection() {
+        // Prevent instantiation
+    }
+
+    public static Connection getConnection() {
         try {
             Class.forName("org.postgresql.Driver");
-            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
             System.err.println("PostgreSQL Driver not found.");
             e.printStackTrace();
@@ -46,28 +48,5 @@ public class DatabaseConnection {
         }
     }
 
-    public static DatabaseConnection getInstance() {
-        if (instance == null) {
-            synchronized (DatabaseConnection.class) {
-                if (instance == null) {
-                    instance = new DatabaseConnection();
-                }
-            }
-        }
-        return instance;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void closeConnection() {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    // Remove the closeConnection method, as it's now managed at the connection level
 }

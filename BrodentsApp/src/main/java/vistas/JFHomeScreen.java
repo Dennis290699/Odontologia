@@ -52,14 +52,14 @@ public class JFHomeScreen {
         frame.setBounds(100, 100, 800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false); // Deshabilitar la opción de maximizar la ventana
-        frame.setTitle("HeladosUCE - Home");
+        frame.setTitle("BRODENT'S - Inicio");
         frame.setLayout(new BorderLayout());
 
         // Panel superior con título
         JPanel topPanel = new JPanel();
         topPanel.setBackground(new Color(0, 123, 255));
         frame.add(topPanel, BorderLayout.NORTH);
-        JLabel lblTitulo = new JLabel("Bienvenido a HeladosUCE");
+        JLabel lblTitulo = new JLabel("BRODENT'S");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         lblTitulo.setForeground(Color.WHITE);
         topPanel.add(lblTitulo);
@@ -75,28 +75,28 @@ public class JFHomeScreen {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Botón "Hacer un Pedido"
-        JButton btnHacerPedido = crearBoton("Hacer un Pedido");
-        centerPanel.add(btnHacerPedido, gbc);
+        // Botón "Gestionar Citas"
+        JButton btnGestionarCitas = crearBoton("Gestionar Citas");
+        centerPanel.add(btnGestionarCitas, gbc);
 
-        // Botón "Catálogo de Productos"
+        // Botón "Gestionar Pacientes"
         gbc.gridy++;
-        JButton btnCatalogo = crearBoton("Catálogo de Productos");
-        centerPanel.add(btnCatalogo, gbc);
+        JButton btnGestionarPacientes = crearBoton("Gestionar Pacientes");
+        centerPanel.add(btnGestionarPacientes, gbc);
 
-        // Botón "Ver Carrito de Compras"
+        // Botón "Gestionar Servicios"
         gbc.gridy++;
-        JButton btnCarrito = crearBoton("Ver Carrito de Compras");
-        centerPanel.add(btnCarrito, gbc);
+        JButton btnGestionarServicios = crearBoton("Gestionar Servicios");
+        centerPanel.add(btnGestionarServicios, gbc);
 
-        // Botón "Ofertas y Promociones"
+        // Botón "Ver Reportes"
         gbc.gridy++;
-        JButton btnOfertas = crearBoton("Ofertas y Promociones");
-        centerPanel.add(btnOfertas, gbc);
+        JButton btnVerReportes = crearBoton("Ver Reportes");
+        centerPanel.add(btnVerReportes, gbc);
 
-        // Botón "Contactar con Nosotros"
+        // Botón "Contactar"
         gbc.gridy++;
-        JButton btnContacto = crearBoton("Contactar con Nosotros");
+        JButton btnContacto = crearBoton("Contactar");
         centerPanel.add(btnContacto, gbc);
 
         // Botón "Sobre Nosotros"

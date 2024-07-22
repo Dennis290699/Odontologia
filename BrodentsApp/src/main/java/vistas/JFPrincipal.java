@@ -53,7 +53,7 @@ public class JFPrincipal {
 		frame.setResizable(false); // Deshabilitar la opción de maximizar la ventana
 
 		// Añadir imagen de fondo
-		JLabel background = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/background/wallpaper.jpg").getImage()
+		JLabel background = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/background/wallpaper1.jpg").getImage()
 				.getScaledInstance(800, 600, Image.SCALE_SMOOTH)));
 		frame.setContentPane(background);
 		background.setLayout(new GridBagLayout());
@@ -66,12 +66,12 @@ public class JFPrincipal {
 
 		// Logo de la heladería
 		JLabel lblLogo = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/icons/icon_logo.png").getImage()
-				.getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+				.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
 		background.add(lblLogo, gbc);
 
 		// Nombre de la heladería
 		gbc.gridy++;
-		JLabel lblNombre = new JLabel("HeladosUCE");
+		JLabel lblNombre = new JLabel("BRODENT'S");
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 36));
 		lblNombre.setForeground(Color.WHITE);
 		background.add(lblNombre, gbc);
