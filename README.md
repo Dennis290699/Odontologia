@@ -12,7 +12,7 @@ docker run --name Patrones_Container -e POSTGRES_USER=admin -e POSTGRES_PASSWORD
 
 Este comando hará lo siguiente:
 - Crea un contenedor llamado `Patrones_Container`.
-- Establece el usuario, contraseña y base de datos inicial.
+- Establece el usuario: admin, contraseña: admin123 y base de datos inicial.
 - Expone el puerto 5432 para acceder a la base de datos desde tu máquina local.
 - Ejecuta PostgreSQL en segundo plano.
 
