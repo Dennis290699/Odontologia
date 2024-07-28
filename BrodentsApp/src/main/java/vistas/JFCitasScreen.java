@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class JFCitasScreen {
+public class JFCitasScreen extends JFrame{
 
     private JFrame frame;
     private static final Color MAIN_COLOR = new Color(0, 123, 255);
@@ -26,19 +27,6 @@ public class JFCitasScreen {
     private static final Color BUTTON_TEXT_HOVER_COLOR = new Color(0, 123, 255);
     private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, 24);
     private static final String LOGO_IMAGE_PATH = "/assets/icons/icon_logo.png";
-    
-//    public static void main(String[] args) {
-//        EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    JFCitasScreen window = new JFCitasScreen();
-//                    window.frame.setVisible(true);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
 
     public JFCitasScreen() {
         initialize();
@@ -94,7 +82,24 @@ public class JFCitasScreen {
 
         centerPanel.add(createButton("Crear Cita", e -> crearCita()), gbc);
         gbc.gridy++;
-        centerPanel.add(createButton("Listar Citas", e -> listarCitas()), gbc);
+        centerPanel.add(createButton("Listar Citas", e -> {
+			try {
+				listarCitas();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}), gbc);
+        gbc.gridy++;
+        
+        centerPanel.add(createButton("Modificar Cita", e -> {
+			try {
+				modificarCita();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}), gbc);
         gbc.gridy++;
         gbc.anchor = GridBagConstraints.SOUTHEAST;
         centerPanel.add(createButton("Volver", e -> volverAlMenu()), gbc);
@@ -126,13 +131,21 @@ public class JFCitasScreen {
     }
 
     private void crearCita() {
-        // Código para crear una nueva cita
-        System.out.println("Crear nueva cita");
+    	JFRegistrarCita registrarCitas = new JFRegistrarCita();
+    	registrarCitas.setVisible(true);
+        frame.dispose();
     }
 
-    private void listarCitas() {
-        // Código para listar todas las citas
-        System.out.println("Listar todas las citas");
+    private void listarCitas() throws SQLException {
+    	JFListarCitasScreen listarCitas = new JFListarCitasScreen();
+    	listarCitas.setVisible(true);
+        frame.dispose();
+    }
+    
+    private void modificarCita() throws SQLException {
+    	JFReagendarCitaScreen reagendarCitas = new JFReagendarCitaScreen();
+    	reagendarCitas.setVisible(true);
+        frame.dispose();
     }
 
     private void volverAlMenu() {

@@ -11,7 +11,7 @@ public class PacienteService {
     private final PacienteDAO pacienteDAO;
 
     public PacienteService(Connection connection) {
-        this.pacienteDAO = new PacienteDAO(connection);
+        this.pacienteDAO = new PacienteDAO();
     }
 
     public void addPaciente(String nombre, String apellido, String cedula, String telefono) throws SQLException {

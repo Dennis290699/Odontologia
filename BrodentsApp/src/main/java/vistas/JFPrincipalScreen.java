@@ -1,7 +1,6 @@
 package vistas;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,32 +8,33 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class JFPrincipal {
+public class JFPrincipalScreen extends JFrame{
 
 	private JFrame frame;
 	private static final String BACKGROUND_IMAGE_PATH = "/assets/background/wallpaper1.jpg";
 	private static final String LOGO_IMAGE_PATH = "/assets/icons/icon_logo.png";
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFPrincipal window = new JFPrincipal();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					JFPrincipalScreen window = new JFPrincipalScreen();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-	public JFPrincipal() {
+	public JFPrincipalScreen() {
 		initialize();
 	}
 

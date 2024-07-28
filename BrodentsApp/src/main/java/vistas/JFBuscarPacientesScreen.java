@@ -10,7 +10,7 @@ import java.awt.*;
 import java.sql.SQLException;
 import java.util.List;
 
-public class JFBuscarPacientes {
+public class JFBuscarPacientesScreen extends JFrame{
 
     private JFrame frame;
     private JTextField txtCedula;
@@ -18,7 +18,7 @@ public class JFBuscarPacientes {
     private JTable table;
     private PacienteDAO pacienteDAO;
 
-    public JFBuscarPacientes() {
+    public JFBuscarPacientesScreen() {
         pacienteDAO = new PacienteDAO();
         initialize();
     }

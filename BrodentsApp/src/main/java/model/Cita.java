@@ -1,64 +1,65 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Cita {
     private int id;
-    private int pacienteId;
-    private LocalDateTime fechaHora;
-    private int tipoServicioId;
-    private String observaciones;
+    private String cedulaPaciente;
+    private int idServicio;
+    private int idHorario;
+    private LocalDate fecha;
 
-    public Cita(int id, int pacienteId, LocalDateTime fechaHora, int tipoServicioId, String observaciones) {
+    // Constructor
+    public Cita(int id, String cedulaPaciente, int idServicio, int idHorario, LocalDate fecha) {
         this.id = id;
-        this.pacienteId = pacienteId;
-        this.fechaHora = fechaHora;
-        this.tipoServicioId = tipoServicioId;
-        this.observaciones = observaciones;
+        this.cedulaPaciente = cedulaPaciente;
+        this.idServicio = idServicio;
+        this.idHorario = idHorario;
+        this.fecha = fecha;
     }
 
-	public int getId() {
-		return id;
-	}
+    // Constructor sin parámetros (opcional)
+    public Cita() {
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    // Getters y Setters
+    public int getId() {
+        return id;
+    }
 
-	public int getPacienteId() {
-		return pacienteId;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setPacienteId(int pacienteId) {
-		this.pacienteId = pacienteId;
-	}
+    public String getCedulaPaciente() {
+        return cedulaPaciente;
+    }
 
-	public LocalDateTime getFechaHora() {
-		return fechaHora;
-	}
+    public void setCedulaPaciente(String cedulaPaciente) {
+        this.cedulaPaciente = cedulaPaciente;
+    }
 
-	public void setFechaHora(LocalDateTime fechaHora) {
-		this.fechaHora = fechaHora;
-	}
+    public int getIdServicio() {
+        return idServicio;
+    }
 
-	public int getTipoServicioId() {
-		return tipoServicioId;
-	}
+    public void setIdServicio(int idServicio) {
+        this.idServicio = idServicio;
+    }
 
-	public void setTipoServicioId(int tipoServicioId) {
-		this.tipoServicioId = tipoServicioId;
-	}
+    public int getIdHorario() {
+        return idHorario;
+    }
 
-	public String getObservaciones() {
-		return observaciones;
-	}
+    public void setIdHorario(int idHorario) {
+        this.idHorario = idHorario;
+    }
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
-	}
-	
-    @Override
-    public String toString() {
-        return "Cita{id=" + id + ", pacienteId=" + pacienteId + ", fechaHora=" + fechaHora + ", tipoServicioId=" + tipoServicioId + ", observaciones='" + observaciones + "'}";
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 }

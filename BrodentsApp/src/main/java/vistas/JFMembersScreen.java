@@ -22,7 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class JFMembersScreen {
+public class JFMembersScreen extends JFrame{
 
     private JFrame frame;
     private static final Color MAIN_COLOR = new Color(0, 123, 255);
@@ -31,19 +31,6 @@ public class JFMembersScreen {
     private static final Color BUTTON_TEXT_HOVER_COLOR = new Color(0, 123, 255);
     private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, 24);
     private static final String LOGO_IMAGE_PATH = "/assets/icons/icon_logo.png";
-
-//    public static void main(String[] args) {
-//        EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    JFMembersScreen window = new JFMembersScreen();
-//                    window.frame.setVisible(true);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
 
     public JFMembersScreen() {
         initialize();

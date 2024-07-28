@@ -17,6 +17,10 @@ public class PacienteDAO {
 		this.connection = DatabaseConnection.getConnection();
 	}
 
+	public PacienteDAO(Connection connection2) {
+		this.connection = DatabaseConnection.getConnection();
+	}
+
 	// Verificar si el paciente ya existe
 	public boolean pacienteExists(String cedula) throws SQLException {
 		String query = "SELECT COUNT(*) FROM pacientes WHERE cedula = ?";
@@ -118,6 +122,24 @@ public class PacienteDAO {
             }
         }
         return pacientes;
+    }
+	
+	public Paciente getPacienteByCedula(String cedula) throws SQLException {
+        String sql = "SELECT * FROM pacientes WHERE cedula = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, cedula);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Paciente(
+                            rs.getString("cedula"),
+                            rs.getString("nombre"),
+                            rs.getString("apellido"),
+                            rs.getString("telefono")
+                    );
+                }
+            }
+        }
+        return null;
     }
 
     public List<Paciente> buscarPacientesPorNombre(String nombre) throws SQLException {

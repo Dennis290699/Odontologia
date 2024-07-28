@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class JFPacientesScreen {
+public class JFPacientesScreen extends JFrame{
 
     private JFrame frame;
     private static final Color MAIN_COLOR = new Color(0, 123, 255);
@@ -129,19 +129,19 @@ public class JFPacientesScreen {
     }
 
     private void listarPacientes() throws SQLException {
-    	JFListarPacientes listarPacientes = new JFListarPacientes();
+    	JFListarPacientesScreen listarPacientes = new JFListarPacientesScreen();
     	listarPacientes.setVisible(true);
         frame.dispose();
     }
 
     private void registrarPaciente() throws SQLException {
-    	JFRegistrarPacientes registrarPacientes = new JFRegistrarPacientes();
+    	JFRegistrarPacientesScreen registrarPacientes = new JFRegistrarPacientesScreen();
     	registrarPacientes.setVisible(true);
         frame.dispose();
     }
 
     private void filtrarPacientes() {
-    	JFBuscarPacientes filtrarPacientes = new JFBuscarPacientes();
+    	JFBuscarPacientesScreen filtrarPacientes = new JFBuscarPacientesScreen();
     	filtrarPacientes.setVisible(true);
         frame.dispose();
     }
