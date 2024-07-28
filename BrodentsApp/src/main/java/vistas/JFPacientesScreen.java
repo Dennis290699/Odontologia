@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class JFHomeScreen {
+public class JFPacientesScreen {
 
     private JFrame frame;
     private static final Color MAIN_COLOR = new Color(0, 123, 255);
@@ -25,23 +26,9 @@ public class JFHomeScreen {
     private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
     private static final Color BUTTON_TEXT_HOVER_COLOR = new Color(0, 123, 255);
     private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, 24);
-    private static final String BACKGROUND_IMAGE_PATH = "/assets/background/wallpaper1.jpg";
     private static final String LOGO_IMAGE_PATH = "/assets/icons/icon_logo.png";
 
-//    public static void main(String[] args) {
-//        EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    JFHomeScreen window = new JFHomeScreen();
-//                    window.frame.setVisible(true);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
-
-    public JFHomeScreen() {
+    public JFPacientesScreen() {
         initialize();
     }
 
@@ -50,7 +37,7 @@ public class JFHomeScreen {
         frame.setBounds(100, 100, 800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setTitle("BRODENT'S - Inicio");
+        frame.setTitle("BRODENT'S - Pacientes");
         frame.setLayout(new BorderLayout());
 
         createTopPanel();
@@ -93,14 +80,27 @@ public class JFHomeScreen {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        centerPanel.add(createButton("Pacientes", e -> openPacientesScreen()), gbc);
+        centerPanel.add(createButton("Listar Pacientes", e -> {
+			try {
+				listarPacientes();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}), gbc);
         gbc.gridy++;
-        centerPanel.add(createButton("Citas", e -> openCitasScreen()), gbc);
+        centerPanel.add(createButton("Registrar Paciente", e -> {
+			try {
+				registrarPaciente();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}), gbc);
         gbc.gridy++;
-        centerPanel.add(createButton("Especialistas", e -> openMembersScreen()), gbc);
+        centerPanel.add(createButton("Filtrar Pacientes", e -> filtrarPacientes()), gbc);
         gbc.gridy++;
         gbc.anchor = GridBagConstraints.SOUTHEAST;
-        centerPanel.add(createButton("Salir", e -> exitApplication()), gbc);
+        centerPanel.add(createButton("Volver", e -> volverAlMenu()), gbc);
     }
 
     private JButton createButton(String text, ActionListener actionListener) {
@@ -128,27 +128,27 @@ public class JFHomeScreen {
         return button;
     }
 
-    private void openPacientesScreen() {
-    	JFPacientesScreen pacientes = new JFPacientesScreen();
-    	pacientes.setVisible(true);
+    private void listarPacientes() throws SQLException {
+    	JFListarPacientes listarPacientes = new JFListarPacientes();
+    	listarPacientes.setVisible(true);
         frame.dispose();
     }
 
-    private void openCitasScreen() {
-    	JFCitasScreen citas = new JFCitasScreen();
-    	citas.setVisible(true);
+    private void registrarPaciente() throws SQLException {
+    	JFRegistrarPacientes registrarPacientes = new JFRegistrarPacientes();
+    	registrarPacientes.setVisible(true);
         frame.dispose();
     }
 
-    private void openMembersScreen() {
-    	JFMembersScreen especialistas = new JFMembersScreen();
-    	especialistas.setVisible(true);
+    private void filtrarPacientes() {
+    	JFBuscarPacientes filtrarPacientes = new JFBuscarPacientes();
+    	filtrarPacientes.setVisible(true);
         frame.dispose();
     }
 
-    private void exitApplication() {
-        JFPrincipal principal = new JFPrincipal();
-        principal.setVisible(true);
+    private void volverAlMenu() {
+        JFHomeScreen homeScreen = new JFHomeScreen();
+        homeScreen.setVisible(true);
         frame.dispose();
     }
 

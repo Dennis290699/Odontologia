@@ -17,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class JFHomeScreen {
+public class JFCitasScreen {
 
     private JFrame frame;
     private static final Color MAIN_COLOR = new Color(0, 123, 255);
@@ -25,14 +25,13 @@ public class JFHomeScreen {
     private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
     private static final Color BUTTON_TEXT_HOVER_COLOR = new Color(0, 123, 255);
     private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, 24);
-    private static final String BACKGROUND_IMAGE_PATH = "/assets/background/wallpaper1.jpg";
     private static final String LOGO_IMAGE_PATH = "/assets/icons/icon_logo.png";
-
+    
 //    public static void main(String[] args) {
 //        EventQueue.invokeLater(new Runnable() {
 //            public void run() {
 //                try {
-//                    JFHomeScreen window = new JFHomeScreen();
+//                    JFCitasScreen window = new JFCitasScreen();
 //                    window.frame.setVisible(true);
 //                } catch (Exception e) {
 //                    e.printStackTrace();
@@ -41,7 +40,7 @@ public class JFHomeScreen {
 //        });
 //    }
 
-    public JFHomeScreen() {
+    public JFCitasScreen() {
         initialize();
     }
 
@@ -50,7 +49,7 @@ public class JFHomeScreen {
         frame.setBounds(100, 100, 800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setTitle("BRODENT'S - Inicio");
+        frame.setTitle("BRODENT'S - Citas");
         frame.setLayout(new BorderLayout());
 
         createTopPanel();
@@ -93,14 +92,12 @@ public class JFHomeScreen {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        centerPanel.add(createButton("Pacientes", e -> openPacientesScreen()), gbc);
+        centerPanel.add(createButton("Crear Cita", e -> crearCita()), gbc);
         gbc.gridy++;
-        centerPanel.add(createButton("Citas", e -> openCitasScreen()), gbc);
-        gbc.gridy++;
-        centerPanel.add(createButton("Especialistas", e -> openMembersScreen()), gbc);
+        centerPanel.add(createButton("Listar Citas", e -> listarCitas()), gbc);
         gbc.gridy++;
         gbc.anchor = GridBagConstraints.SOUTHEAST;
-        centerPanel.add(createButton("Salir", e -> exitApplication()), gbc);
+        centerPanel.add(createButton("Volver", e -> volverAlMenu()), gbc);
     }
 
     private JButton createButton(String text, ActionListener actionListener) {
@@ -128,27 +125,19 @@ public class JFHomeScreen {
         return button;
     }
 
-    private void openPacientesScreen() {
-    	JFPacientesScreen pacientes = new JFPacientesScreen();
-    	pacientes.setVisible(true);
-        frame.dispose();
+    private void crearCita() {
+        // Código para crear una nueva cita
+        System.out.println("Crear nueva cita");
     }
 
-    private void openCitasScreen() {
-    	JFCitasScreen citas = new JFCitasScreen();
-    	citas.setVisible(true);
-        frame.dispose();
+    private void listarCitas() {
+        // Código para listar todas las citas
+        System.out.println("Listar todas las citas");
     }
 
-    private void openMembersScreen() {
-    	JFMembersScreen especialistas = new JFMembersScreen();
-    	especialistas.setVisible(true);
-        frame.dispose();
-    }
-
-    private void exitApplication() {
-        JFPrincipal principal = new JFPrincipal();
-        principal.setVisible(true);
+    private void volverAlMenu() {
+        JFHomeScreen homeScreen = new JFHomeScreen();
+        homeScreen.setVisible(true);
         frame.dispose();
     }
 

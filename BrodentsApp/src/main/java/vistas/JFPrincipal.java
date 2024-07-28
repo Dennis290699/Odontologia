@@ -9,7 +9,6 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,10 +18,9 @@ import javax.swing.JLabel;
 public class JFPrincipal {
 
 	private JFrame frame;
+	private static final String BACKGROUND_IMAGE_PATH = "/assets/background/wallpaper1.jpg";
+	private static final String LOGO_IMAGE_PATH = "/assets/icons/icon_logo.png";
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -36,25 +34,17 @@ public class JFPrincipal {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public JFPrincipal() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false); // Deshabilitar la opción de maximizar la ventana
+		frame.setResizable(false);
 
-		// Añadir imagen de fondo
-		JLabel background = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/background/wallpaper1.jpg").getImage()
-				.getScaledInstance(800, 600, Image.SCALE_SMOOTH)));
+		JLabel background = createBackgroundLabel();
 		frame.setContentPane(background);
 		background.setLayout(new GridBagLayout());
 
@@ -64,20 +54,35 @@ public class JFPrincipal {
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.CENTER;
 
-		// Logo de la heladería
-		JLabel lblLogo = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/icons/icon_logo.png").getImage()
-				.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
-		background.add(lblLogo, gbc);
+		background.add(createLogoLabel(), gbc);
 
-		// Nombre de la heladería
 		gbc.gridy++;
+		background.add(createTitleLabel(), gbc);
+
+		gbc.gridy++;
+		background.add(createWelcomeButton(), gbc);
+	}
+
+	private JLabel createBackgroundLabel() {
+		ImageIcon backgroundImageIcon = new ImageIcon(getClass().getResource(BACKGROUND_IMAGE_PATH));
+		Image backgroundImage = backgroundImageIcon.getImage().getScaledInstance(800, 600, Image.SCALE_SMOOTH);
+		return new JLabel(new ImageIcon(backgroundImage));
+	}
+
+	private JLabel createLogoLabel() {
+		ImageIcon logoImageIcon = new ImageIcon(getClass().getResource(LOGO_IMAGE_PATH));
+		Image logoImage = logoImageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		return new JLabel(new ImageIcon(logoImage));
+	}
+
+	private JLabel createTitleLabel() {
 		JLabel lblNombre = new JLabel("BRODENT'S");
 		lblNombre.setFont(new Font("Arial", Font.BOLD, 36));
 		lblNombre.setForeground(Color.WHITE);
-		background.add(lblNombre, gbc);
+		return lblNombre;
+	}
 
-		// Botón "Bienvenido"
-		gbc.gridy++;
+	private JButton createWelcomeButton() {
 		JButton btnBienvenido = new JButton("Bienvenido");
 		btnBienvenido.setFont(new Font("Arial", Font.BOLD, 24));
 		btnBienvenido.setForeground(Color.WHITE);
@@ -100,17 +105,14 @@ public class JFPrincipal {
 				btnBienvenido.setForeground(Color.WHITE);
 			}
 		});
-		background.add(btnBienvenido, gbc);
-
-		// Acción del botón
 		btnBienvenido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Abrir la nueva ventana JFHomeScreen
 				JFHomeScreen homeScreen = new JFHomeScreen();
 				homeScreen.setVisible(true);
-				frame.dispose(); // Cerrar la ventana principal
+				frame.dispose();
 			}
 		});
+		return btnBienvenido;
 	}
 
 	public void setVisible(boolean visible) {

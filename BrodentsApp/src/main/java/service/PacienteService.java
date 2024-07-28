@@ -14,8 +14,8 @@ public class PacienteService {
         this.pacienteDAO = new PacienteDAO(connection);
     }
 
-    public void addPaciente(String cedula, String nombre, String telefono, String email) throws SQLException {
-        Paciente paciente = new Paciente(0, cedula, nombre, telefono, email);
+    public void addPaciente(String nombre, String apellido, String cedula, String telefono) throws SQLException {
+        Paciente paciente = new Paciente(cedula, nombre, apellido, telefono);
         pacienteDAO.addPaciente(paciente);
     }
 
@@ -28,7 +28,7 @@ public class PacienteService {
     }
 
     public void updatePaciente(int id, String cedula, String nombre, String telefono, String email) throws SQLException {
-        Paciente paciente = new Paciente(id, cedula, nombre, telefono, email);
+        Paciente paciente = new Paciente( cedula, nombre, telefono, email);
         pacienteDAO.updatePaciente(paciente);
     }
 

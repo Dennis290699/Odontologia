@@ -1,60 +1,152 @@
 package App;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.sql.Statement;
+import java.util.Scanner;
 
-import model.Cita;
 import model.Paciente;
-import model.TipoServicio;
-import service.CitaService;
 import service.PacienteService;
-import service.TipoServicioService;
 import util.DatabaseConnection;
 
 public class Principal {
+    static Connection connection = DatabaseConnection.getConnection();
+
     public static void main(String[] args) {
-        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            TipoServicioService tipoServicioService = new TipoServicioService(connection);
-            PacienteService pacienteService = new PacienteService(connection);
-            CitaService citaService = new CitaService(connection);
 
-            // Ejemplo de uso del servicio TipoServicio
-            TipoServicio tipoServicio = new TipoServicio(0, "Consulta General", new BigDecimal("50.00"));
-            tipoServicioService.addTipoServicio(tipoServicio.getNombre(), tipoServicio.getPrecio());
-            TipoServicio retrievedTipoServicio = tipoServicioService.getTipoServicio(1);
-            System.out.println("Tipo de Servicio: " + retrievedTipoServicio);
+        Scanner scanner = new Scanner(System.in);
+        Paciente paciente = new Paciente();
+        PacienteService pacienteService = new PacienteService(connection);
 
-            // Ejemplo de uso del servicio Paciente
-            Paciente paciente = new Paciente(0, "123456789", "Juan Pérez", "555-1234", "juan.perez@example.com");
+        System.out.println("Bienvenido a --Tu medico virtual-- para agendar tu cita online.");
+
+        // VERIFICAR Y CREAR UN USUARIO
+        boolean pacienteEncontrado = false;
+
+        while (!pacienteEncontrado) {
+            // Solicitar la cédula del paciente
+            System.out.println("Por favor, ingrese su número de cedula:");
+            String cedula = scanner.nextLine();
+            paciente.setCedula(cedula);
+
+            // Verificar si el paciente ya existe
             try {
-                pacienteService.addPaciente(paciente.getCedula(), paciente.getNombre(), paciente.getTelefono(), paciente.getEmail());
-                Paciente retrievedPaciente = pacienteService.getPaciente(1);
-                System.out.println("Paciente: " + retrievedPaciente);
+                String queryPacienteExistente = "SELECT * FROM pacientes WHERE cedula = ?";
+                PreparedStatement pstmtPaciente = connection.prepareStatement(queryPacienteExistente);
+                pstmtPaciente.setString(1, cedula); // Aquí se establece el parámetro
+
+                ResultSet rsPacienteExistente = pstmtPaciente.executeQuery();
+
+                if (rsPacienteExistente.next()) {
+                    System.out.println("La cédula ya está registrada. Por favor, ingrese una cédula diferente.");
+                } else {
+                    // Paciente no encontrado, solicitar más datos
+                    System.out.println("Por favor, ingrese su nombre:");
+                    String nombre = scanner.nextLine();
+                    paciente.setNombre(nombre);
+
+                    System.out.println("Por favor, ingrese su apellido:");
+                    String apellido = scanner.nextLine();
+                    paciente.setApellido(apellido);
+
+                    System.out.println("Por favor, ingrese su número de telefono:");
+                    String telefono = scanner.nextLine();
+                    paciente.setTelefono(telefono);
+
+                    // AGREGAR USUARIO
+                    Paciente pacienteAdd = new Paciente(cedula, nombre, apellido, telefono);
+                    try {
+                        pacienteService.addPaciente(pacienteAdd.getNombre(), pacienteAdd.getApellido(),
+                                pacienteAdd.getCedula(), pacienteAdd.getTelefono());
+                        System.out.println("Paciente " + nombre + " registrado");
+                        pacienteEncontrado = true;
+                    } catch (SQLException e) {
+                        System.err.println("Error al agregar paciente: " + e.getMessage());
+                    }
+                }
             } catch (SQLException e) {
-                System.err.println("Error al agregar paciente: " + e.getMessage());
+                System.err.println("Error al verificar paciente: " + e.getMessage());
+            }
+        }
+
+        // MOSTRAR SERVICIOS
+        int idServicioSeleccionado = -1;
+        try {
+            String queryServicios = "SELECT * FROM servicios";
+            Statement stmtServicios = connection.createStatement();
+            ResultSet rsServicios = stmtServicios.executeQuery(queryServicios);
+            System.out.println("######### Selecciona un servicio: #########");
+            while (rsServicios.next()) {
+                System.out.println("|" + rsServicios.getInt("id") + ". " + rsServicios.getString("nombre")
+                        + " - Precio: $" + rsServicios.getDouble("precio") + "|");
             }
 
-            // Ejemplo de uso del servicio Cita
-            Cita cita = new Cita(0, 1, LocalDateTime.now(), 1, "Primera cita");
-            citaService.addCita(cita.getPacienteId(), cita.getFechaHora(), cita.getTipoServicioId(), cita.getObservaciones());
-            Cita retrievedCita = citaService.getCita(1);
-            System.out.println("Cita: " + retrievedCita);
-
-            // Listar todos los tipos de servicio, pacientes y citas
-            List<TipoServicio> allTiposServicio = tipoServicioService.getAllTiposServicio();
-            System.out.println("Todos los tipos de servicio: " + allTiposServicio);
-
-            List<Paciente> allPacientes = pacienteService.getAllPacientes();
-            System.out.println("Todos los pacientes: " + allPacientes);
-
-            List<Cita> allCitas = citaService.getAllCitas();
-            System.out.println("Todas las citas: " + allCitas);
-
+            System.out.println("Por favor, ingrese el número del servicio deseado:");
+            idServicioSeleccionado = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer del scanner
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al seleccionar servicio " + e.getMessage());
+        }
+
+        // MOSTRAR HORARIOS
+        int idHorarioSeleccionado = -1;
+        try {
+            String queryHorarios = "SELECT * FROM horarios";
+            Statement stmtHorarios = connection.createStatement();
+            ResultSet rsHorarios = stmtHorarios.executeQuery(queryHorarios);
+
+            System.out.println("Selecciona un horario:");
+            while (rsHorarios.next()) {
+                System.out.println(rsHorarios.getInt("numero") + ". " + rsHorarios.getString("horario"));
+            }
+
+            System.out.println("Por favor, ingrese el número del horario deseado:");
+            idHorarioSeleccionado = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer del scanner
+        } catch (SQLException e) {
+            System.err.println("Error al seleccionar horario " + e.getMessage());
+        }
+
+        // REGISTRAR CITA
+        try {
+            String queryRegistrarCita = "INSERT INTO citas (cedula_paciente, id_servicio, id_horario, fecha) VALUES (?, ?, ?, ?)";
+            PreparedStatement pstmtRegistrarCita = connection.prepareStatement(queryRegistrarCita, Statement.RETURN_GENERATED_KEYS);
+            pstmtRegistrarCita.setString(1, paciente.getCedula());
+            pstmtRegistrarCita.setInt(2, idServicioSeleccionado);
+            pstmtRegistrarCita.setInt(3, idHorarioSeleccionado);
+            pstmtRegistrarCita.setDate(4, new java.sql.Date(System.currentTimeMillis())); // Fecha actual
+
+            pstmtRegistrarCita.executeUpdate();
+            System.out.println("Cita registrada exitosamente.");
+
+            // Obtener el ID de la cita recién registrada
+            ResultSet rsCitaGenerada = pstmtRegistrarCita.getGeneratedKeys();
+            if (rsCitaGenerada.next()) {
+                int idCitaGenerada = rsCitaGenerada.getInt(1);
+
+                // Mostrar detalles de la cita registrada
+                String queryCitaDetalles = "SELECT c.cedula_paciente, p.nombre AS nombre_paciente, h.horario, s.nombre AS nombre_servicio " +
+                                           "FROM citas c " +
+                                           "JOIN pacientes p ON c.cedula_paciente = p.cedula " +
+                                           "JOIN horarios h ON c.id_horario = h.numero " +
+                                           "JOIN servicios s ON c.id_servicio = s.id " +
+                                           "WHERE c.id = ?";
+                PreparedStatement pstmtCitaDetalles = connection.prepareStatement(queryCitaDetalles);
+                pstmtCitaDetalles.setInt(1, idCitaGenerada);
+
+                ResultSet rsCitaDetalles = pstmtCitaDetalles.executeQuery();
+                if (rsCitaDetalles.next()) {
+                    System.out.println("Detalles de la cita registrada:");
+                    System.out.println("Cédula del paciente: " + rsCitaDetalles.getString("cedula_paciente"));
+                    System.out.println("Nombre del paciente: " + rsCitaDetalles.getString("nombre_paciente"));
+                    System.out.println("Horario: " + rsCitaDetalles.getString("horario"));
+                    System.out.println("Servicio: " + rsCitaDetalles.getString("nombre_servicio"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al registrar la cita: " + e.getMessage());
         }
     }
 }
