@@ -17,7 +17,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class JFHomeScreen extends JFrame{
+import decorators.ColorButtonDecorator;
+import decorators.FontButtonDecorator;
+import decorators.HoverEffectButtonDecorator;
+
+public class JFHomeScreen extends JFrame {
 
     private JFrame frame;
     private static final Color MAIN_COLOR = new Color(0, 123, 255);
@@ -25,7 +29,7 @@ public class JFHomeScreen extends JFrame{
     private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
     private static final Color BUTTON_TEXT_HOVER_COLOR = new Color(0, 123, 255);
     private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, 24);
-//    private static final String BACKGROUND_IMAGE_PATH = "/assets/background/wallpaper1.jpg";
+    private static final Font BUTTON_FONT = new Font("Arial", Font.BOLD, 18);
     private static final String LOGO_IMAGE_PATH = "/assets/icons/icon_logo.png";
 
     public JFHomeScreen() {
@@ -80,56 +84,48 @@ public class JFHomeScreen extends JFrame{
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        centerPanel.add(createButton("Pacientes", e -> openPacientesScreen()), gbc);
+        centerPanel.add(createDecoratedButton("Pacientes", e -> openPacientesScreen()), gbc);
         gbc.gridy++;
-        centerPanel.add(createButton("Citas", e -> openCitasScreen()), gbc);
+        centerPanel.add(createDecoratedButton("Citas", e -> openCitasScreen()), gbc);
         gbc.gridy++;
-        centerPanel.add(createButton("Especialistas", e -> openMembersScreen()), gbc);
+        centerPanel.add(createDecoratedButton("Especialistas", e -> openMembersScreen()), gbc);
         gbc.gridy++;
         gbc.anchor = GridBagConstraints.SOUTHEAST;
-        centerPanel.add(createButton("Salir", e -> exitApplication()), gbc);
+        centerPanel.add(createDecoratedButton("Salir", e -> exitApplication()), gbc);
     }
 
-    private JButton createButton(String text, ActionListener actionListener) {
+    private JButton createDecoratedButton(String text, ActionListener actionListener) {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(200, 40));
-        button.setFont(new Font("Arial", Font.BOLD, 18));
-        button.setForeground(BUTTON_TEXT_COLOR);
-        button.setBackground(MAIN_COLOR);
         button.setOpaque(true);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(HOVER_COLOR);
-                button.setForeground(BUTTON_TEXT_HOVER_COLOR);
-            }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(MAIN_COLOR);
-                button.setForeground(BUTTON_TEXT_COLOR);
-            }
-        });
+        // Apply decorators
+        new ColorButtonDecorator(button, MAIN_COLOR, BUTTON_TEXT_COLOR);
+        new FontButtonDecorator(button, BUTTON_FONT);
+        new HoverEffectButtonDecorator(button, HOVER_COLOR, BUTTON_TEXT_HOVER_COLOR);
+
         button.addActionListener(actionListener);
         return button;
     }
 
     private void openPacientesScreen() {
-    	JFPacientesScreen pacientes = new JFPacientesScreen();
-    	pacientes.setVisible(true);
+        JFPacientesScreen pacientes = new JFPacientesScreen();
+        pacientes.setVisible(true);
         frame.dispose();
     }
 
     private void openCitasScreen() {
-    	JFCitasScreen citas = new JFCitasScreen();
-    	citas.setVisible(true);
+        JFCitasScreen citas = new JFCitasScreen();
+        citas.setVisible(true);
         frame.dispose();
     }
 
     private void openMembersScreen() {
-    	JFMembersScreen especialistas = new JFMembersScreen();
-    	especialistas.setVisible(true);
+        JFMembersScreen especialistas = new JFMembersScreen();
+        especialistas.setVisible(true);
         frame.dispose();
     }
 
