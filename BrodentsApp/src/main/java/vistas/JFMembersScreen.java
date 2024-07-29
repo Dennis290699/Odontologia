@@ -140,12 +140,12 @@ public class JFMembersScreen extends JFrame{
 
     private List<Miembro> getMiembros() {
         List<Miembro> miembros = new ArrayList<>();
-        miembros.add(new Miembro("B4LB3R1TH", "/assets/members/2.png"));
-        miembros.add(new Miembro("Miembro 2", "/assets/members/2.png"));
-        miembros.add(new Miembro("Miembro 3", "/assets/members/2.png"));
-        miembros.add(new Miembro("Miembro 4", "/assets/members/2.png"));
-        miembros.add(new Miembro("Miembro 5", "/assets/members/2.png"));
-        miembros.add(new Miembro("Miembro 6", "/assets/members/2.png"));
+        miembros.add(new Miembro("Dennis", "/assets/images/2.jpeg"));
+        miembros.add(new Miembro("Edwin", "/assets/images/1.jpg"));
+        miembros.add(new Miembro("David", "/assets/images/3.jpeg"));
+        miembros.add(new Miembro("Marco", "/assets/images/4.png"));
+        miembros.add(new Miembro("Kevin", "/assets/images/5.jpeg"));
+        miembros.add(new Miembro("Pablo", "/assets/images/6.png"));
         return miembros;
     }
 
