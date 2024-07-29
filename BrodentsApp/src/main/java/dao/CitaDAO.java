@@ -84,11 +84,12 @@ public class CitaDAO {
 		}
 	}
 
-	public void deleteCita(int id) throws SQLException {
-		String sql = "DELETE FROM citas WHERE id = ?";
-		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setInt(1, id);
-			stmt.executeUpdate();
+	public boolean deleteCita(int citaId) throws SQLException {
+		String query = "DELETE FROM citas WHERE id = ?";
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			stmt.setInt(1, citaId);
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;
 		}
 	}
 
@@ -136,5 +137,18 @@ public class CitaDAO {
 			stmt.setInt(2, id);
 			stmt.executeUpdate();
 		}
+	}
+
+	public boolean isHorarioOcupado(LocalDate fecha, int idHorario) throws SQLException {
+		String query = "SELECT COUNT(*) FROM citas WHERE fecha = ? AND id_horario = ?";
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			stmt.setDate(1, java.sql.Date.valueOf(fecha));
+			stmt.setInt(2, idHorario);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1) > 0;
+			}
+		}
+		return false;
 	}
 }
