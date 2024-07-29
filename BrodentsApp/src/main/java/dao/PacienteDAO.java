@@ -48,20 +48,6 @@ public class PacienteDAO {
 			stmt.executeUpdate();
 		}
 	}
-
-	/*public Paciente getPaciente(int id) throws SQLException {
-		String sql = "SELECT * FROM pacientes WHERE id = ?";
-		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setInt(1, id);
-			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) {
-					return new Paciente(rs.getString("cedula"), rs.getString("nombre"), rs.getString("apellido"),
-							rs.getString("telefono"));
-				}
-			}
-		}
-		return null;
-	}*/
 	
 	public Paciente getPaciente(int id) throws SQLException {
 	    String sql = "SELECT * FROM pacientes WHERE id = ?";
@@ -81,29 +67,6 @@ public class PacienteDAO {
 	    }
 	    return null;
 	}
-
-
-	/*public List<Paciente> getAllPacientes() {
-		List<Paciente> pacientes = new ArrayList<>();
-		String query = "SELECT cedula, nombre, apellido, telefono FROM pacientes";
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				String cedula = resultSet.getString("cedula");
-				String nombre = resultSet.getString("nombre");
-				String apellido = resultSet.getString("apellido");
-				String telefono = resultSet.getString("telefono");
-
-				Paciente paciente = new Paciente(cedula, nombre, apellido, telefono);
-				pacientes.add(paciente);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return pacientes;
-	}*/
 	
 	public List<Paciente> getAllPacientes() {
 	    List<Paciente> pacientes = new ArrayList<>();
@@ -148,25 +111,6 @@ public class PacienteDAO {
 		}
 	}
 	
-	/*public List<Paciente> buscarPacientesPorCedula(String cedula) throws SQLException {
-        List<Paciente> pacientes = new ArrayList<>();
-        String query = "SELECT * FROM pacientes WHERE cedula = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, cedula);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Paciente paciente = new Paciente(
-                            rs.getString("cedula"),
-                            rs.getString("nombre"),
-                            rs.getString("apellido"),
-                            rs.getString("telefono")
-                    );
-                    pacientes.add(paciente);
-                }
-            }
-        }
-        return pacientes;
-    }*/
 	public List<Paciente> buscarPacientesPorCedula(String cedula) throws SQLException {
 	    List<Paciente> pacientes = new ArrayList<>();
 	    String query = "SELECT * FROM pacientes WHERE cedula = ?";
@@ -207,26 +151,6 @@ public class PacienteDAO {
         }
         return null;
     }
-
-   /* public List<Paciente> buscarPacientesPorNombre(String nombre) throws SQLException {
-        List<Paciente> pacientes = new ArrayList<>();
-        String query = "SELECT * FROM pacientes WHERE nombre ILIKE ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, "%" + nombre + "%");
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Paciente paciente = new Paciente(
-                            rs.getString("cedula"),
-                            rs.getString("nombre"),
-                            rs.getString("apellido"),
-                            rs.getString("telefono")
-                    );
-                    pacientes.add(paciente);
-                }
-            }
-        }
-        return pacientes;
-    }*/
 	
 	public List<Paciente> buscarPacientesPorNombre(String nombre) throws SQLException {
 	    List<Paciente> pacientes = new ArrayList<>();

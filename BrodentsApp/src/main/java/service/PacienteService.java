@@ -13,11 +13,6 @@ public class PacienteService {
     public PacienteService(Connection connection) {
         this.pacienteDAO = new PacienteDAO();
     }
-
-   /* public void addPaciente(String nombre, String apellido, String cedula, String telefono) throws SQLException {
-        Paciente paciente = new Paciente(cedula, nombre, apellido, telefono);
-        pacienteDAO.addPaciente(paciente);
-    }*/
     
     public void addPaciente(String nombre, String apellido, String cedula, String telefono) throws SQLException {
         // Utilizar el Builder para construir el objeto Paciente
@@ -39,11 +34,6 @@ public class PacienteService {
     public List<Paciente> getAllPacientes() throws SQLException {
         return pacienteDAO.getAllPacientes();
     }
-
-   /* public void updatePaciente(int id, String cedula, String nombre, String telefono, String email) throws SQLException {
-        Paciente paciente = new Paciente( cedula, nombre, telefono, email);
-        pacienteDAO.updatePaciente(paciente);
-    }*/
     
     public void updatePaciente(int id, String cedula, String nombre, String telefono, String email) throws SQLException {
         // Utilizar el Builder para construir el objeto Paciente
